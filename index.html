@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>API Data Integration</h1>
+    <div id="data-container">Loading data...</div>
+</body>
+
+<script>
+    const apiUrl = 'https://atv-aula4-2026-2back.onrender.com/'
+
+    async function fetchApiData() {
+            try {
+                // Send the HTTP GET request to the URL
+                const response = await fetch(apiUrl);
+                
+                // Check if the response is successful (status 200-299)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                // Convert the response stream into a JSON object
+                const data = await response.json();
+                
+                // 3. Display the data in your HTML container
+                displayData(data);
+                
+            } catch (error) {
+                // Handle any network or API errors gracefully
+                document.getElementById('data-container').innerText = 'Failed to load data.';
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function displayData(data) {
+            const container = document.getElementById('data-container');
+            container.innerHTML = `
+                <p><strong>User ID:</strong> ${data.date}</p>
+                <p><strong>Title:</strong> ${data.status}</p>
+            `;
+        }
+
+        // 5. Execute the function when the script loads
+        fetchApiData();
+</script>
+</html>
